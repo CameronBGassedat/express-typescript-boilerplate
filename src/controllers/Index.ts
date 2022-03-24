@@ -9,4 +9,28 @@ export default {
       next(error);
     }
   },
+  post :async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      res.json({ message: "hello world" });
+      return;
+    } catch (error) {
+      next(error);
+    }
+  },
+  delete : async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      res.json({ message: "hello world" });
+      return;
+    } catch (error) {
+      next(error);
+    }
+  },
+  patch : async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      res.json({ message: "hello world" });
+      return;
+    } catch (error) {
+      next(error);
+    }
+  },
 };

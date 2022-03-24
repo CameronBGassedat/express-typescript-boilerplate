@@ -6,7 +6,7 @@
 import app from "./app";
 import d from "debug";
 import http from "http";
-const debug = d("express-typescript-boilerplate:server");
+const debug = d("connected-house:server");
 
 /**
  * Get port from environment and store in Express.

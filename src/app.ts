@@ -5,7 +5,10 @@ import logger from "morgan";
 import cookieParser from "cookie-parser";
 
 // Routers
-import indexRouter from "@/routes/Index";
+import index from "@/routes/Index";
+import user from "@/routes/User";
+import sensor from "@/routes/Sensor";
+import actuator from "@/routes/Actuator";
 const app = express();
 
 // view engine setup
@@ -16,7 +19,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/", indexRouter);
+app.use("/", index);
+app.use("/user", user);
+app.use("/sensor", sensor);
+app.use("/actuator", actuator);
 
 // catch 404
 app.use(function (req: Request, res: Response, next: NextFunction) {

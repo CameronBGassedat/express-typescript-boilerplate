@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from "express";
 export default {
   get: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      res.json({ message: "index hello world" });
+      res.json({ message: "actuator hello world" });
       return;
     } catch (error) {
       next(error);
@@ -11,7 +11,7 @@ export default {
   },
   post :async (req: Request, res: Response, next: NextFunction) => {
     try {
-      res.json({ message: "index hello world" });
+      res.json({ message: "actuator hello world" });
       return;
     } catch (error) {
       next(error);
@@ -19,7 +19,7 @@ export default {
   },
   delete : async (req: Request, res: Response, next: NextFunction) => {
     try {
-      res.json({ message: "index hello world" });
+      res.json({ message: "actuator hello world" });
       return;
     } catch (error) {
       next(error);
@@ -27,7 +27,7 @@ export default {
   },
   patch : async (req: Request, res: Response, next: NextFunction) => {
     try {
-      res.json({ message: "index hello world" });
+      res.json({ message: "actuator hello world" });
       return;
     } catch (error) {
       next(error);

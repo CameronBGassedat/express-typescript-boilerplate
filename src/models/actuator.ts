@@ -11,6 +11,4 @@ const actuatorSchema = new mongoose.Schema({
 });
 //TODO change value to Boolean or Int
 
-const actuator = mongoose.model('Actuator', actuatorSchema);
-
-export default actuator;
+module.exports = mongoose.model('Actuator', actuatorSchema);

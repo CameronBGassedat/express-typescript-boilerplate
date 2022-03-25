@@ -17,6 +17,4 @@ const responseSchema = new mongoose.Schema({
 
 //TODO change value to Boolean or Int
 
-const response = mongoose.model('Response', responseSchema);
-
-export default response;
+module.exports = mongoose.model('Response', responseSchema);

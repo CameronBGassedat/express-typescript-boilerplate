@@ -11,6 +11,4 @@ const sensorSchema = new mongoose.Schema({
 
 //TODO change value to Boolean or Int
 
-const sensor = mongoose.model('Sensor', sensorSchema);
-
-export default sensor;
+module.exports = mongoose.model('Sensor', sensorSchema);

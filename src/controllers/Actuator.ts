@@ -1,14 +1,17 @@
 import { NextFunction, Request, Response } from "express";
+import {ApiResponse} from "../Response/Response"
 
 export default {
   getall: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      res.json({ message: "actuator hello world" });
+      var apiResponse = new ApiResponse("All users have been caught", []);
+      res.json(apiResponse);
       return;
     } catch (error) {
-      next(error);
+      next(new ApiResponse("Error", undefined, error as Error));
     }
   },
+
   getone: async (req: Request, res: Response, next: NextFunction) => {
     try {
       res.json({ message: "actuator hello world" });
@@ -17,6 +20,7 @@ export default {
       next(error);
     }
   },
+
   post :async (req: Request, res: Response, next: NextFunction) => {
     try {
       res.json({ message: "actuator hello world" });
@@ -25,6 +29,7 @@ export default {
       next(error);
     }
   },
+
   delete : async (req: Request, res: Response, next: NextFunction) => {
     try {
       res.json({ message: "actuator hello world" });
@@ -33,6 +38,7 @@ export default {
       next(error);
     }
   },
+
   patch : async (req: Request, res: Response, next: NextFunction) => {
     try {
       res.json({ message: "actuator hello world" });
@@ -41,4 +47,5 @@ export default {
       next(error);
     }
   },
+
 };

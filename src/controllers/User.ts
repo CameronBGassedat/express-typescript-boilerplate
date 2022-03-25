@@ -1,7 +1,15 @@
 import { NextFunction, Request, Response } from "express";
 
 export default {
-  get: async (req: Request, res: Response, next: NextFunction) => {
+  getone: async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      res.json({ message: "usr" });
+      return;
+    } catch (error) {
+      next(error);
+    }
+  },
+  getall: async (req: Request, res: Response, next: NextFunction) => {
     try {
       res.json({ message: "user hello world" });
       return;

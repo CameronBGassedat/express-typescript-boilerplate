@@ -3,8 +3,8 @@ import express from "express";
 const router = express.Router();
 
 /* User*/
-router.get("/", User.get);
-router.get("/:id", User.get);
+router.get("/", User.getall);
+router.get("/:id", User.getone);
 router.post("/", User.post);
 router.patch("/:id", User.patch);
 router.delete("/:id", User.delete);

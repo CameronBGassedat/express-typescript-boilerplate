@@ -29,6 +29,15 @@ export default {
       next(new ApiResponse("Error", undefined, error as Error));
     }
   },
+  postfromtoken :async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      var apiResponse = new ApiResponse("A user has been created from a token", []);
+      res.json(apiResponse);
+      return;
+    } catch (error) {
+      next(new ApiResponse("Error", undefined, error as Error));
+    }
+  },
   delete : async (req: Request, res: Response, next: NextFunction) => {
     try {
       var apiResponse = new ApiResponse("A user has been deleted", []);

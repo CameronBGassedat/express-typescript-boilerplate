@@ -1,14 +1,16 @@
 import mongoose from 'mongoose';
+import { type } from 'os';
+
+enum ActuatorType{
+    BLINDS = "BLINDS",
+    LIGHT = "LIGHT"
+}
 
 const actuatorSchema = new mongoose.Schema({
     id: String,
-    name: {
-        type: String,
-        enum: ["blinds", "light"]
-    },
+    ActuatorType : type,
     designation : String,
-    state : Boolean
+    state : Number
 });
-//TODO change value to Boolean or Int
 
 module.exports = mongoose.model('Actuator', actuatorSchema);

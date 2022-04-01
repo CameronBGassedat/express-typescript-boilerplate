@@ -6,9 +6,7 @@ const sensorSchema = new mongoose.Schema({
         enum: ['temperature', 'humidity', 'barometer', 'proximity']
     },
     designation : String,
-    rawValue : Boolean
+    rawValue : Number
 });
-
-//TODO change value to Boolean or Int
 
 module.exports = mongoose.model('Sensor', sensorSchema);

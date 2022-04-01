@@ -4,7 +4,7 @@ const actuatorSchema = new mongoose.Schema({
     id: String,
     name: {
         type: String,
-        enum: ['blinds', 'light']
+        enum: ["blinds", "light"]
     },
     designation : String,
     state : Boolean

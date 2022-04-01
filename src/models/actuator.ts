@@ -11,4 +11,7 @@ const actuatorSchema = new mongoose.Schema({
     state: Number
 });
 
+actuatorSchema.set('toJSON', { virtuals: true });
+
 export const actuator = mongoose.model('Actuator', actuatorSchema);
+

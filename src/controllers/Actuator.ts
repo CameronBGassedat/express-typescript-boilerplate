@@ -5,8 +5,8 @@ import {ApiResponse} from "../Response/Response"
 export default {
   getall: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const actuator = await act.find();
-      var apiResponse = new ApiResponse("All users have been found", [actuator]);
+      const actuators = await act.find();
+      var apiResponse = new ApiResponse("All users have been found", actuators);
       res.json(apiResponse);
       return;
     } catch (error) {

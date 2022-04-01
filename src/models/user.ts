@@ -20,4 +20,6 @@ type UserPost = Omit<User, "id">
 type UserLogin = Pick<User, "email" | "password">
 type UserUpdate = Pick<Partial<UserPost>, "username">
 
+userSchema.set('toJSON', { virtuals: true });
+
 export const User = mongoose.model('User', userSchema);

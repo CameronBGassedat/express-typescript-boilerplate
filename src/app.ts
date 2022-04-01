@@ -13,6 +13,7 @@ import actuator from "@/routes/Actuator";
 import { Console } from "console";
 
 import {connectDatabase} from "@/database/mongo";
+import cors from "cors";
 const app = express();
 
 // view engine setup
@@ -23,6 +24,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(connectDatabase);
+
+app.use(cors());
 
 app.use("/", index);
 app.use("/user", user);

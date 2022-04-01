@@ -27,10 +27,12 @@ export default {
 
   post :async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const actuator = await User.create(req.body)
-      var apiResponse = new ApiResponse("A user has been created", {id: actuator._id});
-      res.json(apiResponse);
-      return;
+      if (req.body.username) {
+        const actuator = await User.create(req.body)
+        var apiResponse = new ApiResponse("A user has been created", {id: actuator._id});
+        res.json(apiResponse);
+        return;
+      }
     } catch (error) {
       next(new ApiResponse("Error", undefined, error as Error));
     }
@@ -38,11 +40,17 @@ export default {
 
   postLogin :async (req: Request, res: Response, next: NextFunction) => {
     try {
-      // TODO find a way to post from a token
-      const user = await User.create(req.body);
-      var apiResponse = new ApiResponse("A user has been created from a token", {token : user});
-      res.json(apiResponse);
-      return;
+      if (!req.params.username) {
+        const filter = {
+          username : req.params.username,
+          password : req.params.password
+        }
+        const user = await User.findOne(filter);
+        console.log(user);
+        var apiResponse = new ApiResponse("A already existing user has reconnected", {token : user});
+        res.json(apiResponse);
+        return;
+      }
     } catch (error) {
       next(new ApiResponse("Error", undefined, error as Error));
     }

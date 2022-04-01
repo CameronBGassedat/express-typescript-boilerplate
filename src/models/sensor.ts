@@ -14,14 +14,14 @@ type Sensor = {
     rawValue: number | boolean
 }
 
-const sensorSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        enum: ['temperature', 'humidity', 'barometer', 'proximity']
-    },
+const sensorSchema = new mongoose.Schema<Sensor>({
+    id : Number,
+    type : SensorType,
     designation : String,
     rawValue : Number
 });
+
+// TODO id should be iether a number of a string
 
 type SensorGet = Sensor & {value: string}
 type SensorPost = Omit<Sensor, "id">

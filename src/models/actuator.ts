@@ -8,7 +8,7 @@ enum ActuatorType{
 
 const actuatorSchema = new mongoose.Schema({
     id: String,
-    ActuatorType : type,
+    type : ActuatorType,
     designation : String,
     state : Number
 });

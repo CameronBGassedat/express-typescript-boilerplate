@@ -1,6 +1,8 @@
 import { User } from "@/models/User";
 import { NextFunction, Request, Response } from "express";
 import {ApiResponse} from "../Response/Response"
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 export default {
   getall: async (req: Request, res: Response, next: NextFunction) => {
@@ -25,11 +27,12 @@ export default {
     }
   },
 
-  post :async (req: Request, res: Response, next: NextFunction) => {
+  post : async (req: Request, res: Response, next: NextFunction) => {
     try {
       if (req.body.username) {
-        const actuator = await User.create(req.body)
-        var apiResponse = new ApiResponse("A user has been created", {id: actuator._id});
+        const user = await User.create(req.body);
+
+        var apiResponse = new ApiResponse("A user has been created", {id: user._id});
         res.json(apiResponse);
         return;
       }
@@ -42,16 +45,31 @@ export default {
     try {
       if (!req.params.username) {
         const filter = {
-          username : req.params.username,
-          password : req.params.password
+          email : req.body.email
         }
-        const user = await User.findOne(filter);
+        const user = await User.findOne({filter});
+
+        const { email, password } = req.body;
+        
+        if (email && password) {
+          if (user && (await bcrypt.compare(password, password))) {
+            // Create token
+            const token = jwt.sign(
+              { user_id: req.body._id, email },
+              "cest moi",
+              {
+                expiresIn: "2h",
+              }
+            );
+          }
+      }
         console.log(user);
         var apiResponse = new ApiResponse("A already existing user has reconnected", {token : user});
         res.json(apiResponse);
         return;
       }
     } catch (error) {
+      console.error(error);
       next(new ApiResponse("Error", undefined, error as Error));
     }
   },

@@ -51,7 +51,7 @@ export default {
   delete : async (req: Request, res: Response, next: NextFunction) => {
     try {
       const actuator = await act.findByIdAndDelete(req.params.id)
-      var apiResponse = new ApiResponse("A user has been deleted", {actuator});
+      var apiResponse = new ApiResponse("A actuator has been deleted", {actuator});
       res.json(apiResponse);
       return;
     } catch (error) {

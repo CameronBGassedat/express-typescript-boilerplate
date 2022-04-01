@@ -1,17 +1,24 @@
 import mongoose from 'mongoose';
 
-const userSchema = new mongoose.Schema({
+
+interface User
+{
+    username: string,
+    password: string,
+    id: number,
+    email: string
+}
+
+const userSchema = new mongoose.Schema<User>({
     username: String,
     password: String,
-    id: String,
+    id: Number,
     email: String
 });
 
-//TODO add number type to id when correct syntax is found
-//TODO find the correct way to omit
+type UserGet = Omit<User, "password">
+type UserPost = Omit<User, "id">
+type UserLogin = Pick<User, "email" | "password">
+type UserUpdate = Pick<Partial<UserPost>, "username">
 
 module.exports= mongoose.model('User', userSchema);
-
-// type UserGet = Omit<userSchema, "password">
-// type UserPost = Omit<User, "id">
-// type UserUpdate = Partial<UserPost>

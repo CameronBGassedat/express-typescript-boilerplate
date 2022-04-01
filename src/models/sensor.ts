@@ -1,14 +1,31 @@
 import mongoose from 'mongoose';
 
-const sensorSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        enum: ['temperature', 'humidity', 'barometer', 'proximity']
-    },
+enum SensorType{
+    TEMPERATURE = "TEMPERATURE",
+    HUMIDITY = "HUMIDITY",
+    BARO = "BARO",
+    PROXIMITY = "PROXIMITY"
+}
+
+type Sensor = {
+    id: number | string
+    type: SensorType
+    designation : string
+    rawValue: number | boolean
+}
+
+const sensorSchema = new mongoose.Schema<Sensor>({
+    id : Number,
+    type : SensorType,
     designation : String,
-    rawValue : Boolean
+    rawValue : Number
 });
 
-//TODO change value to Boolean or Int
+// TODO id should be iether a number of a string
+
+type SensorGet = Sensor & {value: string}
+type SensorPost = Omit<Sensor, "id">
+type SensorUpdate = Partial<SensorPost>
 
 module.exports = mongoose.model('Sensor', sensorSchema);
+

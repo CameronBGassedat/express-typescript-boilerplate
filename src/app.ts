@@ -12,7 +12,7 @@ import actuator from "@/routes/Actuator";
 
 import { Console } from "console";
 
-import db from "@/database/mongo";
+import {connectDatabase} from "@/database/mongo";
 const app = express();
 
 // view engine setup
@@ -22,7 +22,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
-app.use(db);
+app.use(connectDatabase);
 
 app.use("/", index);
 app.use("/user", user);

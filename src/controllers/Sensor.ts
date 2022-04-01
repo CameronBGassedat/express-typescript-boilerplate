@@ -1,10 +1,12 @@
 import { NextFunction, Request, Response } from "express";
-import {ApiResponse} from "../Response/Response"
+import { ApiResponse } from "../Response/Response"
+import { Sensor } from "@/models/Sensor";
 
 export default {
   getall: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      var apiResponse = new ApiResponse("All users have been found", []);
+      const sensor = await Sensor.find();
+      var apiResponse = new ApiResponse("list of Sensors found: ", [sensor ]);
       res.json(apiResponse);
       return;
     } catch (error) {
@@ -14,7 +16,8 @@ export default {
 
   getone: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      var apiResponse = new ApiResponse("A user has been found", []);
+      const sensor = await Sensor.findById(req.params.id);
+      var apiResponse = new ApiResponse("A sensor has been found", { sensor });
       res.json(apiResponse);
       return;
     } catch (error) {
@@ -24,7 +27,8 @@ export default {
   
   post :async (req: Request, res: Response, next: NextFunction) => {
     try {
-      var apiResponse = new ApiResponse("A sensor has been created", []);
+      const sensor = await Sensor.create(req.body)
+      var apiResponse = new ApiResponse("A sensor has been created", {id: sensor._id});
       res.json(apiResponse);
       return;
     } catch (error) {
@@ -34,7 +38,9 @@ export default {
 
   patch : async (req: Request, res: Response, next: NextFunction) => {
     try {
-      var apiResponse = new ApiResponse("A sensor information hhas been updated", []);
+      const idFilter = { id : req.params.id}
+      const sensor = await Sensor.findOneAndUpdate(idFilter, req.body);
+      var apiResponse = new ApiResponse("A sensor has been updated", {sensor});
       res.json(apiResponse);
       return;
     } catch (error) {
@@ -44,7 +50,8 @@ export default {
   
   delete : async (req: Request, res: Response, next: NextFunction) => {
     try {
-      var apiResponse = new ApiResponse("All sensor has been deleted", []);
+      const sensor = await Sensor.findByIdAndDelete(req.params.id)
+      var apiResponse = new ApiResponse("A sensor has been deleted", {sensor});
       res.json(apiResponse);
       return;
     } catch (error) {

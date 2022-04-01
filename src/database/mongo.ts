@@ -7,7 +7,6 @@ var mongoose = require('mongoose');
 var mongoDB = 'mongodb://127.0.0.1:27017/ConnectedHouse';
 
 const connectDatabase = async (req: Request, res : Response, next: NextFunction) => {
-    
     try {
         await mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology: true});
         next();
@@ -17,7 +16,7 @@ const connectDatabase = async (req: Request, res : Response, next: NextFunction)
         db.on('error', console.error.bind(console, 'MongoDB connection error:'));
     } catch (error) {
         next(error);
-    }    
+    }
 }
 
-export default connectDatabase
+export {connectDatabase }

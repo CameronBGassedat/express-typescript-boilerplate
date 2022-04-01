@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 
-
 interface User
 {
     username: string,
@@ -21,4 +20,4 @@ type UserPost = Omit<User, "id">
 type UserLogin = Pick<User, "email" | "password">
 type UserUpdate = Pick<Partial<UserPost>, "username">
 
-module.exports= mongoose.model('User', userSchema);
+export const User = mongoose.model('User', userSchema);

@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { ModuleResolutionKind } from 'typescript';
 
 enum SensorType{
     TEMPERATURE = "TEMPERATURE",
@@ -15,17 +16,15 @@ type Sensor = {
 }
 
 const sensorSchema = new mongoose.Schema<Sensor>({
-    id : Number,
-    type : SensorType,
+    type: { type: String, enum: ["TEMPERATURE", "HUMIDITY", "BARO", "PROXIMITY"], required: true },
     designation : String,
     rawValue : Number
 });
 
-// TODO id should be iether a number of a string
+// TODO id should be either a number of a string
 
 type SensorGet = Sensor & {value: string}
 type SensorPost = Omit<Sensor, "id">
 type SensorUpdate = Partial<SensorPost>
 
-module.exports = mongoose.model('Sensor', sensorSchema);
-
+export const Sensor = mongoose.model('Sensor', sensorSchema);

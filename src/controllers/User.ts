@@ -1,4 +1,6 @@
 import { User } from "@/models/User";
+import  argon2  from "argon2";
+import { Console, error } from "console";
 import { NextFunction, Request, Response } from "express";
 import {ApiResponse} from "../Response/Response"
 const bcrypt = require("bcryptjs");
@@ -8,7 +10,7 @@ export default {
   getall: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const user = await User.find();
-      var apiResponse = new ApiResponse("All users has been found", [user]);
+      var apiResponse = new ApiResponse("All users has been found", user);
       res.json(apiResponse);
       return;
     } catch (error) {
@@ -30,9 +32,11 @@ export default {
   post : async (req: Request, res: Response, next: NextFunction) => {
     try {
       if (req.body.username) {
-        const user = await User.create(req.body);
+        req.body.password = await bcrypt.hash(req.body.password, 10);
 
+        const user = await User.create(req.body);
         var apiResponse = new ApiResponse("A user has been created", {id: user._id});
+
         res.json(apiResponse);
         return;
       }
@@ -43,30 +47,27 @@ export default {
 
   postLogin :async (req: Request, res: Response, next: NextFunction) => {
     try {
-      if (!req.params.username) {
-        const filter = {
-          email : req.body.email
-        }
-        const user = await User.findOne({filter});
-
         const { email, password } = req.body;
-        
-        if (email && password) {
-          if (user && (await bcrypt.compare(password, password))) {
-            // Create token
+        const user = await User.findOne(email);
+        let isPresent:boolean = false;
+        if (!email || !password || !user)
+          throw (error)
+        if (isPresent = await bcrypt.compare(password, user.password)) {
             const token = jwt.sign(
               { user_id: req.body._id, email },
-              "cest moi",
+              "cest moi le user",
               {
                 expiresIn: "2h",
               }
             );
-          }
-      }
-        console.log(user);
-        var apiResponse = new ApiResponse("A already existing user has reconnected", {token : user});
-        res.json(apiResponse);
-        return;
+          console.log("pwd given ? :" + password);
+          console.log("user pwd ? :" + user.password);
+          console.log("isPresent ? :" + isPresent);
+          var apiResponse = new ApiResponse("A already existing user has reconnected", {token : user});
+          res.json(apiResponse);
+          return;
+      } else {
+        throw (error)
       }
     } catch (error) {
       console.error(error);

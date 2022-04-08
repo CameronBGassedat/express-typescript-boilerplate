@@ -5,8 +5,8 @@ import {ApiResponse} from "../Response/Response"
 export default {
   getall: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const actuator = await act.find();
-      var apiResponse = new ApiResponse("All users have been found", [actuator]);
+      const actuators = await act.find();
+      var apiResponse = new ApiResponse("", actuators);
       res.json(apiResponse);
       return;
     } catch (error) {
@@ -17,7 +17,7 @@ export default {
   getone: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const actuator = await act.findById(req.params.id);
-      var apiResponse = new ApiResponse("A user has been found", {actuator});
+      var apiResponse = new ApiResponse("", actuator);
       res.json(apiResponse);
       return;
     } catch (error) {
@@ -51,7 +51,7 @@ export default {
   delete : async (req: Request, res: Response, next: NextFunction) => {
     try {
       const actuator = await act.findByIdAndDelete(req.params.id)
-      var apiResponse = new ApiResponse("A user has been deleted", {actuator});
+      var apiResponse = new ApiResponse("A actuator has been deleted", {actuator});
       res.json(apiResponse);
       return;
     } catch (error) {

@@ -11,7 +11,6 @@ interface User
 const userSchema = new mongoose.Schema<User>({
     username: String,
     password: String,
-    id: Number,
     email: String
 });
 

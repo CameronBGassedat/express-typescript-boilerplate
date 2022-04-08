@@ -1,10 +1,8 @@
 import { User } from "@/models/User";
-import  argon2  from "argon2";
-import { Console, error } from "console";
 import { NextFunction, Request, Response } from "express";
 import {ApiResponse} from "../Response/Response"
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
+import bcrypt from "bcryptjs"
+import jwt from "jsonwebtoken"
 
 export default {
   getall: async (req: Request, res: Response, next: NextFunction) => {
@@ -14,7 +12,7 @@ export default {
       res.json(apiResponse);
       return;
     } catch (error) {
-      next(new ApiResponse("Error", undefined, error as Error));
+      next(error);
     }
   },
   
@@ -25,7 +23,7 @@ export default {
       res.json(apiResponse);
       return;
     } catch (error) {
-      next(new ApiResponse("Error", undefined, error as Error));
+      next(error);
     }
   },
 
@@ -38,52 +36,59 @@ export default {
         var apiResponse = new ApiResponse("A user has been created", {id: user._id});
 
         res.json(apiResponse);
+        // res.status(200).json({ message : "created", user }); // TO DO: verif if this is the right way
         return;
       }
     } catch (error) {
-      next(new ApiResponse("Error", undefined, error as Error));
+      next(error);
     }
   },
 
   postLogin :async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { email, password } = req.body;
-        const user = await User.findOne(email);
-        let isPresent:boolean = false;
+        const user = await User.findOne({email});
+
         if (!email || !password || !user)
-          throw (error)
-        if (isPresent = await bcrypt.compare(password, user.password)) {
+          throw new Error("Email or password not found");
+        if (await bcrypt.compare(password, user.password)) {
+         // req.headers.authorization();
             const token = jwt.sign(
               { user_id: req.body._id, email },
-              "cest moi le user",
+              process.env.SECRET_KEY!,
               {
                 expiresIn: "2h",
               }
             );
+          // TO DO : set global variable to store secret key to verif with token
+          jwt.verify(token, process.env.SECRET_KEY!);
+          
           console.log("pwd given ? :" + password);
           console.log("user pwd ? :" + user.password);
-          console.log("isPresent ? :" + isPresent);
-          var apiResponse = new ApiResponse("A already existing user has reconnected", {token : user});
+          
+          var apiResponse = new ApiResponse("A already existing user has reconnected", {token: token});
           res.json(apiResponse);
           return;
       } else {
-        throw (error)
+        throw new Error("Eczefezs");
       }
     } catch (error) {
       console.error(error);
-      next(new ApiResponse("Error", undefined, error as Error));
+      next(error);
     }
   },
 
   patch : async (req: Request, res: Response, next: NextFunction) => {
     try {
       const idFilter = { id : req.params.id}
-      const user = await User.findOneAndUpdate(idFilter, req.body);
+      const content = req.body;
+      const user = await User.findOneAndUpdate(idFilter, content);
       var apiResponse = new ApiResponse("A user information has been updated", {user});
       res.json(apiResponse);
+      res.status(200).json({ content }); // TO DO: verif if this is the right way
       return;
     } catch (error) {
-      next(new ApiResponse("Error", undefined, error as Error));
+      next(error);
     }
   },
 
@@ -94,7 +99,7 @@ export default {
       res.json(apiResponse);
       return;
     } catch (error) {
-      next(new ApiResponse("Error", undefined, error as Error));
+      next(error);
     }
   },
 

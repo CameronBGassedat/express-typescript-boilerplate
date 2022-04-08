@@ -4,6 +4,10 @@ import path from "path";
 import logger from "morgan";
 import cookieParser from "cookie-parser";
 
+// Enviromment Handling
+require('dotenv').config()
+console.log(process.env)
+
 // Routers
 import index from "@/routes/Index";
 import user from "@/routes/User";
@@ -14,6 +18,7 @@ import { Console } from "console";
 
 import {connectDatabase} from "@/database/mongo";
 import cors from "cors";
+import { ApiResponse } from "./Response/Response";
 const app = express();
 
 // view engine setup
@@ -40,12 +45,8 @@ app.use(function (req: Request, res: Response, next: NextFunction) {
 
 // error handler
 app.use(function (err: any, req: Request, res: Response, next: NextFunction) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
-
   // render the error page
-  res.status(err.status || 500).json(err);
+  res.status(err.status || 500).json(new ApiResponse("Error", undefined, err as Error));
 });
 
 export default app;

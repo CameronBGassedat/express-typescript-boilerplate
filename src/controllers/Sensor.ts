@@ -6,7 +6,7 @@ export default {
   getall: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const sensor = await Sensor.find();
-      var apiResponse = new ApiResponse("list of Sensors found: ", [sensor ]);
+      var apiResponse = new ApiResponse("list of Sensors found: ", [ sensor ]);
       res.json(apiResponse);
       return;
     } catch (error) {
@@ -28,7 +28,7 @@ export default {
   post :async (req: Request, res: Response, next: NextFunction) => {
     try {
       const sensor = await Sensor.create(req.body)
-      var apiResponse = new ApiResponse("A sensor has been created", {id: sensor._id});
+      var apiResponse = new ApiResponse("A sensor has been created", { id: sensor._id });
       res.json(apiResponse);
       return;
     } catch (error) {

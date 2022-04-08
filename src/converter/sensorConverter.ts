@@ -1,6 +1,27 @@
-import { Range } from "@/Converter/Converter";
+export function Converter (type: String, rawValue: number) {
+    var rangeTemp: [number, number] = [-20, 55];
+    var rangeHum: [number, number] = [0, 100];
+    var rangeBaro: [number, number] = [950, 1150];
+    var res;
 
-function Converter (inRange: number[], outRange: number[], unit: string, rawValue : number) {
-    var res = (rawValue/inRange[1])*(outRange[1]-(outRange[0]))+(outRange[1]);
-    return res.toFixed(2);
+    switch (type) {
+        case "TEMPERATURE":
+            res = rawToFormatted(rangeTemp, rawValue);
+            return res.toFixed(1);
+
+        case "HUMIDITY":
+            res = rawToFormatted(rangeHum, rawValue);
+            return res.toFixed(0);
+
+        case "BAROMETER":
+            res = rawToFormatted(rangeBaro, rawValue);
+            return res.toFixed(0);
+            
+        default:
+            break;
+    }
 };
+
+const rawToFormatted = (range: [number, number], rawValue: number): number =>{
+    return (rawValue/1023)*(range[1]-(range[0]))+(range[0])
+}

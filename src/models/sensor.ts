@@ -4,7 +4,7 @@ import { ModuleResolutionKind } from 'typescript';
 enum SensorType{
     TEMPERATURE = "TEMPERATURE",
     HUMIDITY = "HUMIDITY",
-    BARO = "BARO",
+    BAROMETER = "BAROMETER",
     PROXIMITY = "PROXIMITY"
 }
 
@@ -15,8 +15,8 @@ type Sensor = {
     rawValue: number | boolean
 }
 
-const sensorSchema = new mongoose.Schema<Sensor>({
-    type: { type: String, enum: ["TEMPERATURE", "HUMIDITY", "BARO", "PROXIMITY"], required: true },
+export const sensorSchema = new mongoose.Schema<Sensor>({
+    type: { type: String, enum: ["TEMPERATURE", "HUMIDITY", "BAROMETER", "PROXIMITY"], required: true },
     designation : String,
     rawValue : Number
 });

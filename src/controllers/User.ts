@@ -1,4 +1,4 @@
-import { User } from "@/models/User";
+import { User } from "@/models/user";
 import { NextFunction, Request, Response } from "express";
 import {ApiResponse} from "../Response/Response"
 

@@ -11,4 +11,4 @@ const actuatorSchema = new mongoose.Schema({
     state: Number
 });
 
-export const actuator = mongoose.model('Actuator', actuatorSchema);
+export const Actuator = mongoose.model('Actuator', actuatorSchema);

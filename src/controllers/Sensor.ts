@@ -1,12 +1,14 @@
+import { Sensor } from "@/models/sensor";
 import { NextFunction, Request, Response } from "express";
 import { ApiResponse } from "../Response/Response"
-import { Sensor } from "@/models/Sensor";
 
 export default {
   getall: async (req: Request, res: Response, next: NextFunction) => {
     try {
       const sensor = await Sensor.find();
       var apiResponse = new ApiResponse("list of Sensors found: ", [sensor ]);
+
+      
       res.json(apiResponse);
       return;
     } catch (error) {

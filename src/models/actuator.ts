@@ -8,7 +8,7 @@ enum ActuatorType {
 const actuatorSchema = new mongoose.Schema({
     type: { type: String, enum: ["BLINDS", "LIGHT"], required: true },
     designation: String ,
-    state: Number
+    state: Boolean
 });
 
 export const Actuator = mongoose.model('Actuator', actuatorSchema);

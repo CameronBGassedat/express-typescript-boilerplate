@@ -27,4 +27,7 @@ type SensorGet = Sensor & {value: string}
 type SensorPost = Omit<Sensor, "id">
 type SensorUpdate = Partial<SensorPost>
 
+
+sensorSchema.set('toJSON', { virtuals: true });
+
 export const Sensor = mongoose.model('Sensor', sensorSchema);

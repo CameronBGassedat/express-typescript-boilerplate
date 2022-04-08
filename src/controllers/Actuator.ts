@@ -10,7 +10,7 @@ export default {
       res.json(apiResponse);
       return;
     } catch (error) {
-      next(new ApiResponse("Error", undefined, error as Error));
+      next(error);
     }
   },
 
@@ -21,7 +21,7 @@ export default {
       res.json(apiResponse);
       return;
     } catch (error) {
-      next(new ApiResponse("Error", undefined, error as Error));
+      next(error);
     }
   },
 
@@ -32,7 +32,7 @@ export default {
       res.json(apiResponse);
       return;
     } catch (error) {
-      next(new ApiResponse("Error", undefined, error as Error));
+      next(error);
     }
   },
 
@@ -44,7 +44,7 @@ export default {
       res.json(apiResponse);
       return;
     } catch (error) {
-      next(new ApiResponse("Error", undefined, error as Error));
+      next(error);
     }
   },
   
@@ -55,7 +55,7 @@ export default {
       res.json(apiResponse);
       return;
     } catch (error) {
-      next(new ApiResponse("Error", undefined, error as Error));
+      next(error);
     }
   },
 };

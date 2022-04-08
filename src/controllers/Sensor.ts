@@ -10,7 +10,7 @@ export default {
       res.json(apiResponse);
       return;
     } catch (error) {
-      next(new ApiResponse("Error", undefined, error as Error));
+      next(error);
     }
   },
 
@@ -21,7 +21,7 @@ export default {
       res.json(apiResponse);
       return;
     } catch (error) {
-      next(new ApiResponse("Error", undefined, error as Error));
+      next(error);
     }
   },
   
@@ -32,19 +32,20 @@ export default {
       res.json(apiResponse);
       return;
     } catch (error) {
-      next(new ApiResponse("Error", undefined, error as Error));
+      next(error);
     }
   },
 
   patch : async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const idFilter = { id : req.params.id}
+      const idFilter = { _id : req.params.id}
       const sensor = await Sensor.findOneAndUpdate(idFilter, req.body);
+      console.log(sensor)
       var apiResponse = new ApiResponse("A sensor has been updated", {sensor});
       res.json(apiResponse);
       return;
     } catch (error) {
-      next(new ApiResponse("Error", undefined, error as Error));
+      next(error);
     }
   },
   
@@ -55,7 +56,7 @@ export default {
       res.json(apiResponse);
       return;
     } catch (error) {
-      next(new ApiResponse("Error", undefined, error as Error));
+      next(error);
     }
   },
 };

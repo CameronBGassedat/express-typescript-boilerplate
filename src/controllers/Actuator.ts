@@ -10,7 +10,7 @@ export default {
       res.json(apiResponse);
       return;
     } catch (error) {
-      next(new ApiResponse("Error", undefined, error as Error));
+      next(error);
     }
   },
 
@@ -21,7 +21,7 @@ export default {
       res.json(apiResponse);
       return;
     } catch (error) {
-      next(new ApiResponse("Error", undefined, error as Error));
+      next(error);
     }
   },
 
@@ -32,19 +32,18 @@ export default {
       res.json(apiResponse);
       return;
     } catch (error) {
-      next(new ApiResponse("Error", undefined, error as Error));
+      next(error);
     }
   },
 
   patch : async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const idFilter = { id : req.params.id}
-      const actuator = await act.findOneAndUpdate(idFilter, req.body);
+      const actuator = await act.findOneAndUpdate({ _id : req.params.id}, {state : req.body.state});
       var apiResponse = new ApiResponse("A user information has been updated", {actuator});
       res.json(apiResponse);
       return;
     } catch (error) {
-      next(new ApiResponse("Error", undefined, error as Error));
+      next(error);
     }
   },
   
@@ -55,7 +54,7 @@ export default {
       res.json(apiResponse);
       return;
     } catch (error) {
-      next(new ApiResponse("Error", undefined, error as Error));
+      next(error);
     }
   },
 };

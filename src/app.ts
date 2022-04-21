@@ -19,6 +19,7 @@ import { Console } from "console";
 import {connectDatabase} from "@/database/mongo";
 import cors from "cors";
 import { ApiResponse } from "./Response/Response";
+import { oauth_verif } from "./middlewares/oauthHandler";
 const app = express();
 
 // view engine setup
@@ -34,8 +35,8 @@ app.use(cors());
 
 app.use("/", index);
 app.use("/user", user);
-app.use("/sensor", sensor);
-app.use("/actuator", actuator);
+app.use("/sensor", sensor, oauth_verif);
+app.use("/actuator", actuator, oauth_verif);
 
 // catch 404
 app.use(function (req: Request, res: Response, next: NextFunction) {

@@ -28,7 +28,7 @@ export default {
   post :async (req: Request, res: Response, next: NextFunction) => {
     try {
       const actuator = await act.create(req.body)
-      var apiResponse = new ApiResponse("A user has been created", {id: actuator._id});
+      var apiResponse = new ApiResponse("A actuator has been created", {id: actuator._id});
       res.json(apiResponse);
       return;
     } catch (error) {
@@ -39,7 +39,7 @@ export default {
   patch : async (req: Request, res: Response, next: NextFunction) => {
     try {
       const actuator = await act.findOneAndUpdate({ _id : req.params.id}, {state : req.body.state});
-      var apiResponse = new ApiResponse("A user information has been updated", {actuator});
+      var apiResponse = new ApiResponse("A actuator information has been updated", {actuator});
       res.json(apiResponse);
       return;
     } catch (error) {

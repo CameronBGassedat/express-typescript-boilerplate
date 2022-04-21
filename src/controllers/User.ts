@@ -8,7 +8,7 @@ import { signin_oauth} from "@/middlewares/oauthHandler";
 export default {
   getall: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      verif_oauth(req, res, next);
+      //verif_oauth(req, res, next);
 
       // const error = verif_oauth(req.headers.authorization!) ? null :  new Error("Issue While verifying token");
       // if (error) throw error;
@@ -101,7 +101,8 @@ export default {
     }
   },
 };
-function verif_oauth(req: Request<import("express-serve-static-core").ParamsDictionary, any, any, import("qs").ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>>, next: NextFunction) {
-  throw new Error("Function not implemented.");
-}
+
+// function verif_oauth(req: Request<import("express-serve-static-core").ParamsDictionary, any, any, import("qs").ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>>, next: NextFunction) {
+//   throw new Error("Function not implemented.");
+// }
 

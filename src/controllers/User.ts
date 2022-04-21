@@ -63,8 +63,8 @@ export default {
           var apiResponse = new ApiResponse("A already existing user has reconnected", {token: token});
           res.json(apiResponse);
           return;
-      } else {
-        throw new Error("Login Error");
+        } else {
+          throw new Error("Email déja utilisé");
       }
     } catch (error) {
       console.error(error);

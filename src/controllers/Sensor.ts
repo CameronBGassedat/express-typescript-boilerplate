@@ -40,7 +40,6 @@ export default {
     try {
       const idFilter = { _id : req.params.id}
       const sensor = await Sensor.findOneAndUpdate(idFilter, req.body);
-      console.log(sensor)
       var apiResponse = new ApiResponse("A sensor has been updated", {sensor});
       res.json(apiResponse);
       return;

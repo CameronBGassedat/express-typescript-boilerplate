@@ -3,13 +3,15 @@ import { NextFunction, Request, Response } from "express";
 import {ApiResponse} from "../Response/Response"
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
-import { signin_oauth, verif_oauth } from "@/middlewares/oauthHandler";
+import { signin_oauth} from "@/middlewares/oauthHandler";
 
 export default {
   getall: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const error = verif_oauth(req.headers.authorization!) ? null :  new Error("Issue While verifying token");
-      if (error) throw error;
+      verif_oauth(req, res, next);
+
+      // const error = verif_oauth(req.headers.authorization!) ? null :  new Error("Issue While verifying token");
+      // if (error) throw error;
       
       const user = await User.find();
       var apiResponse = new ApiResponse("All users has been found", user);
@@ -23,8 +25,8 @@ export default {
   
   getone: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const error = verif_oauth(req.headers.authorization!) ? null :  new Error("Issue While verifying token");
-      if (error) throw error;
+      // const error = verif_oauth(req.headers.authorization!) ? null :  new Error("Issue While verifying token");
+      // if (error) throw error;
 
       const user = await User.findById(req.params.id);
       var apiResponse = new ApiResponse("A user has been found", {user});
@@ -75,8 +77,8 @@ export default {
 
   patch : async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const error = verif_oauth(req.headers.authorization!) ? null :  new Error("Issue While verifying token");
-      if (error) throw error;
+      // const error = verif_oauth(req.headers.authorization!) ? null :  new Error("Issue While verifying token");
+      // if (error) throw error;
       
       const { email, username } = req.body;
       const user = await User.findOneAndUpdate({ id : req.params.id}, { email, username });
@@ -99,3 +101,7 @@ export default {
     }
   },
 };
+function verif_oauth(req: Request<import("express-serve-static-core").ParamsDictionary, any, any, import("qs").ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>>, next: NextFunction) {
+  throw new Error("Function not implemented.");
+}
+

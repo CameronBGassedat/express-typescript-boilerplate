@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import { ModuleResolutionKind } from 'typescript';
 
 enum SensorType{
     TEMPERATURE = "TEMPERATURE",

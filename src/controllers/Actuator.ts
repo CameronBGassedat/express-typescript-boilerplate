@@ -1,11 +1,14 @@
-import {actuator as act}  from "@/models/Actuator";
+import {Actuator as act}  from "@/models/Actuator";
 import { NextFunction, Request, Response } from "express";
-import {ApiResponse} from "../Response/Response"
-
+import {ApiResponse} from "../Classes/Response"
+import { Database } from "@/Classes/Database";
+const EventEmitter = require('events');
 export default {
   getall: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const actuators = await act.find();
+      // const actuators = await act.find();
+      const db : Database = new Database();
+      const actuators = await db.getAll("actuator");
       var apiResponse = new ApiResponse("", actuators);
       res.json(apiResponse);
       return;
@@ -38,8 +41,10 @@ export default {
 
   patch : async (req: Request, res: Response, next: NextFunction) => {
     try {
+      const eventEmitter = new EventEmitter();
       const actuator = await act.findOneAndUpdate({ _id : req.params.id}, {state : req.body.state});
       var apiResponse = new ApiResponse("A actuator information has been updated", {actuator});
+      eventEmitter.emit('sendNewStatus');
       res.json(apiResponse);
       return;
     } catch (error) {

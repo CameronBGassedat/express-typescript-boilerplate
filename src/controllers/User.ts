@@ -1,6 +1,6 @@
 import { User } from "@/models/User";
 import { NextFunction, Request, Response } from "express";
-import {ApiResponse} from "../Response/Response"
+import {ApiResponse} from "../Classes/Response"
 import { signin_oauth} from "@/middlewares/oauthHandler";
 import bcrypt from "bcryptjs"
 import  xss  from "xss";

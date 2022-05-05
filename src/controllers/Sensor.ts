@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { ApiResponse } from "../Response/Response"
+import { ApiResponse } from "../Classes/Response"
 import { Sensor } from "@/models/Sensor";
 
 export default {

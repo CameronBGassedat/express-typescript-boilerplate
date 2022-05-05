@@ -1,3 +1,3 @@
 export default interface IMailer {
-    mailer: () => Mailer | null;
+    mailer: (to: string, subject: string, text: string) => Mailer | null;
 }

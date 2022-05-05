@@ -2,9 +2,9 @@ import { User } from "@/models/User";
 import { NextFunction, Request, Response } from "express";
 import {ApiResponse} from "../Response/Response"
 import { signin_oauth} from "@/middlewares/oauthHandler";
-import { mailer } from "@/mailer/Mailer";
 import bcrypt from "bcryptjs"
 import  xss  from "xss";
+import { Emitter } from "@/Events/Event";
 
 export default {
   getall: async (req: Request, res: Response, next: NextFunction) => {
@@ -37,7 +37,7 @@ export default {
         req.body.password = await bcrypt.hash(req.body.password, 10);
         const user = await User.create(req.body);
         var apiResponse = new ApiResponse("A user has been created", {id: user._id});
-        mailer.sendEmail("", "", "");
+        Emitter.emit('event');
         res.json(apiResponse);
         return;
       }

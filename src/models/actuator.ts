@@ -5,14 +5,14 @@ enum ActuatorType {
     LIGHT = "LIGHT"
 }
 
-type Actuator = {
+export type IActuator = {
     id: number | string
     type: ActuatorType
     designation : String
     state : Boolean
 }
 
-const actuatorSchema = new mongoose.Schema<Actuator>({
+const actuatorSchema = new mongoose.Schema<IActuator>({
     type: { type: String, enum: ["BLINDS", "LIGHT"], required: true },
     designation: String ,
     state: Boolean

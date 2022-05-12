@@ -1,14 +1,15 @@
 import IDatabase from "./IDatabase"
 import { TableDict } from "./Dictionnary"
+import mongoose from "mongoose";
 
 export class Database implements IDatabase {
 
     getSingle(table : keyof typeof TableDict, idObject : number) {
-        return TableDict[table].findById(idObject);
+        return (TableDict[table] as mongoose.Model<any>).findById(idObject);
     }
 
     getAll(table : keyof typeof TableDict) {
-        return TableDict[table].find();
+        return (TableDict[table] as mongoose.Model<any>).find();
     }
     
     deleteOne(table : keyof typeof TableDict, idObject : number) {
@@ -17,13 +18,13 @@ export class Database implements IDatabase {
     }
     
     updateOne(table: keyof typeof TableDict, idObject : number, obj : any) {
-        TableDict[table].findOneAndUpdate({ id : idObject, state : obj.state});
+        (TableDict[table]as mongoose.Model<any>).findOneAndUpdate({ id : idObject, state : obj.state});
         return true
     }
     
     createOne(table : keyof typeof TableDict, obj : any) {
         TableDict[table].create(obj);
-        return true
+        return obj._id
     }
 };
     

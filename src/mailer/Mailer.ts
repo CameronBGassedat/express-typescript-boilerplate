@@ -27,7 +27,7 @@ class Mailer extends EventEmitter implements IMailer {
 
   async sendEmail(to: string, subject: string, text: string) {
     let info = await this.transporter.sendMail({
-      from: 'Sumatohomu" <maxence.rouge@ynov.com>',
+      from: '"Sumatohomu" <welcome@sumatohomu.com>',
       to: to,
       subject: subject,
       html: text,

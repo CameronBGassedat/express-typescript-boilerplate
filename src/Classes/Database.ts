@@ -4,12 +4,12 @@ import mongoose from "mongoose";
 
 export class Database implements IDatabase {
 
-    getSingle(table : keyof typeof TableDict, idObject : number) {
-        return (TableDict[table] as mongoose.Model<any>).findById(idObject);
+    async getSingle(table : keyof typeof TableDict, idObject : number) {
+        return await (TableDict[table] as mongoose.Model<any>).findById(idObject);
     }
 
-    getAll(table : keyof typeof TableDict) {
-        return (TableDict[table] as mongoose.Model<any>).find();
+    async getAll(table : keyof typeof TableDict) {
+        return await (TableDict[table] as mongoose.Model<any>).find();
     }
     
     deleteOne(table : keyof typeof TableDict, idObject : number) {
@@ -26,5 +26,6 @@ export class Database implements IDatabase {
         TableDict[table].create(obj);
         return obj._id
     }
+    
 };
     

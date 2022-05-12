@@ -4,6 +4,7 @@ import {ApiResponse} from "../Response/Response"
 import { signin_oauth} from "@/middlewares/oauthHandler";
 import bcrypt from "bcryptjs"
 import  xss  from "xss";
+import { Emitter } from "@/Events/Event";
 
 export default {
   getall: async (req: Request, res: Response, next: NextFunction) => {
@@ -36,7 +37,7 @@ export default {
         req.body.password = await bcrypt.hash(req.body.password, 10);
         const user = await User.create(req.body);
         var apiResponse = new ApiResponse("A user has been created", {id: user._id});
-
+        Emitter.emit('event', user.email, "Account created", "Hello\n\tDear guest, a user account has been recently created using your email");
         res.json(apiResponse);
         return;
       }
@@ -95,5 +96,3 @@ export default {
     }
   },
 };
-
-

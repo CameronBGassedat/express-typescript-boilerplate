@@ -5,7 +5,14 @@ enum ActuatorType {
     LIGHT = "LIGHT"
 }
 
-const actuatorSchema = new mongoose.Schema({
+export type IActuator = {
+    id: number | string
+    type: ActuatorType
+    designation : String
+    state : Boolean
+}
+
+const actuatorSchema = new mongoose.Schema<IActuator>({
     type: { type: String, enum: ["BLINDS", "LIGHT"], required: true },
     designation: String ,
     state: Boolean
@@ -13,5 +20,5 @@ const actuatorSchema = new mongoose.Schema({
 
 actuatorSchema.set('toJSON', { virtuals: true });
 
-export const actuator = mongoose.model('Actuator', actuatorSchema);
+export const Actuator = mongoose.model('Actuator', actuatorSchema);
 

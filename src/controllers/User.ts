@@ -1,16 +1,19 @@
 import { User } from "@/models/User";
 import { NextFunction, Request, Response } from "express";
-import {ApiResponse} from "../Response/Response"
+import {ApiResponse} from "../Classes/Response"
 import { signin_oauth} from "@/middlewares/oauthHandler";
 import bcrypt from "bcryptjs"
 import  xss  from "xss";
 import { Emitter } from "@/Events/Event";
+import { Database } from "@/Classes/Database";
 
 export default {
   getall: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const user = await User.find();
-      var apiResponse = new ApiResponse("All users has been found", user);
+      const db : Database = new Database();
+      const users = await db.getAll("user");
+      
+      var apiResponse = new ApiResponse("All users has been found", users);
       res.json(apiResponse);
       
       return;
@@ -21,7 +24,9 @@ export default {
   
   getone: async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const user = await User.findById(req.params.id);
+      const db : Database = new Database();
+      const user = await db.getSingle("user", Number(req.params.id));
+
       var apiResponse = new ApiResponse("A user has been found", {user});
       res.json(apiResponse);
       
@@ -33,11 +38,15 @@ export default {
 
   post : async (req: Request, res: Response, next: NextFunction) => {
     try {
+
       if (req.body.username && req.body.email && req.body.password) {
         req.body.password = await bcrypt.hash(req.body.password, 10);
-        const user = await User.create(req.body);
+
+        const db : Database = new Database();
+        const user = await db.createOne("user", req.body);
+  
         var apiResponse = new ApiResponse("A user has been created", {id: user._id});
-        Emitter.emit('event', user.email, "Account created", "Hello\n\tDear guest, a user account has been recently created using your email");
+
         res.json(apiResponse);
         return;
       }
@@ -50,7 +59,6 @@ export default {
     try {
         const { email, password } = req.body;
         
-        // Remove All tags from email string and check if emails contains a @
         var emailDetails = xss(email, { whiteList: {}, stripIgnoreTag: true} );
         if (!emailDetails.includes('@'))
           throw new Error("Login Error");
@@ -59,9 +67,11 @@ export default {
 
         if (!email || !password || !user)
           throw new Error("Email or password not found");
+
         if (await bcrypt.compare(password, user.password)) {
           const token = signin_oauth(email, req.body._id);
-          var apiResponse = new ApiResponse("A already existing user has reconnected", {token: token});
+          var apiResponse = new ApiResponse("A user has reconnected", {token: token});
+          
           res.json(apiResponse);
           return;
         } else {
@@ -76,7 +86,9 @@ export default {
   patch : async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { email, username } = req.body;
-      const user = await User.findOneAndUpdate({ id : req.params.id}, { email, username });
+      const db : Database = new Database();
+      const user = await db.updateOne("user", Number(req.params.id), req.body.state);
+
       var apiResponse = new ApiResponse("A user information has been updated", {user});
       res.json(apiResponse);
       return;
@@ -87,9 +99,12 @@ export default {
 
   delete : async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const user = await User.findByIdAndDelete(req.params.id);
+      const db : Database = new Database();
+      const user = await db.deleteOne("actuator", Number(req.params.id));
+
       var apiResponse = new ApiResponse("A user has been deleted", {user});
       res.json(apiResponse);
+      
       return;
     } catch (error) {
       next(error);

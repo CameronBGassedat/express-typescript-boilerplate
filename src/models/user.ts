@@ -1,22 +1,21 @@
 import mongoose from 'mongoose';
 
-interface User
-{
+export type IUser = {
     username: string,
     password: string,
     id: number,
     email: string
 }
 
-const userSchema = new mongoose.Schema<User>({
+const userSchema = new mongoose.Schema<IUser>({
     username: String,
     password: String,
     email: String
 });
 
-type UserGet = Omit<User, "password">
-type UserPost = Omit<User, "id">
-type UserLogin = Pick<User, "email" | "password">
+type UserGet = Omit<IUser, "password">
+type UserPost = Omit<IUser, "id">
+type UserLogin = Pick<IUser, "email" | "password">
 type UserUpdate = Pick<Partial<UserPost>, "username">
 
 userSchema.set('toJSON', { virtuals: true });

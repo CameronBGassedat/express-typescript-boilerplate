@@ -18,7 +18,7 @@ import { Console } from "console";
 
 import {connectDatabase} from "@/database/mongo";
 import cors from "cors";
-import { ApiResponse } from "./Response/Response";
+import { ApiResponse } from "./Classes/Response";
 import { oauth_verif } from "./middlewares/oauthHandler";
 const app = express();
 
@@ -43,6 +43,7 @@ app.use(function (req: Request, res: Response, next: NextFunction) {
   // handle it how it pleases you
   res.status(404).json({ message: "not_found" });
 });
+
 
 // error handler
 app.use(function (err: any, req: Request, res: Response, next: NextFunction) {

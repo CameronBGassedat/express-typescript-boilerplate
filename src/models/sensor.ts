@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import { ModuleResolutionKind } from 'typescript';
 
 enum SensorType{
     TEMPERATURE = "TEMPERATURE",
@@ -8,14 +7,14 @@ enum SensorType{
     PROXIMITY = "PROXIMITY"
 }
 
-type Sensor = {
+export type ISensor = {
     id: number | string
     type: SensorType
     designation : string
     rawValue: number | boolean
 }
 
-const sensorSchema = new mongoose.Schema<Sensor>({
+const sensorSchema = new mongoose.Schema<ISensor>({
     type: { type: String, enum: ["TEMPERATURE", "HUMIDITY", "BARO", "PROXIMITY"], required: true },
     designation : String,
     rawValue : Number
@@ -23,8 +22,8 @@ const sensorSchema = new mongoose.Schema<Sensor>({
 
 // TODO id should be either a number of a string
 
-type SensorGet = Sensor & {value: string}
-type SensorPost = Omit<Sensor, "id">
+type SensorGet = ISensor & {value: string}
+type SensorPost = Omit<ISensor, "id">
 type SensorUpdate = Partial<SensorPost>
 
 
